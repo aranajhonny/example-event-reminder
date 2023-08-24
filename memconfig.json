@@ -1,0 +1,98 @@
+{
+  "schema": {
+    "types": [
+      {
+        "name": "Root",
+        "description": "Example of a Membrane program to schedule a recurring event reminder.",
+        "actions": [
+          {
+            "name": "create",
+            "type": "Void",
+            "params": [
+              {
+                "name": "text",
+                "type": "String"
+              },
+              {
+                "name": "atDate",
+                "type": "String",
+                "optional": true
+              },
+              {
+                "name": "repeat",
+                "type": "Boolean",
+                "optional": true
+              }
+            ]
+          },
+          {
+            "name": "sendNotifications",
+            "type": "Void",
+            "params": [
+              {
+                "name": "id",
+                "type": "Int"
+              }
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "name": "find",
+            "type": "Reminder",
+            "params": [
+              {
+                "name": "id",
+                "type": "Int",
+                "ofType": "Reminder"
+              }
+            ]
+          },
+          {
+            "name": "reminders",
+            "type": "List",
+            "ofType": "Reminder"
+          },
+          {
+            "name": "status",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Reminder",
+        "fields": [
+          {
+            "name": "text",
+            "hints": {
+              "primary": true
+            },
+            "type": "String"
+          },
+          {
+            "name": "id",
+            "type": "Int"
+          },
+          {
+            "name": "repeat",
+            "type": "Boolean"
+          },
+          {
+            "name": "atDate",
+            "type": "String"
+          }
+        ],
+        "actions": [
+          {
+            "name": "delete",
+            "type": "Void"
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "sms": "sms:",
+    "email": "email:"
+  }
+}
