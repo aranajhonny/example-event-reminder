@@ -7,9 +7,9 @@ state.reminders = state.reminders ?? [];
 
 export const Root = {
   status: () => "Ready",
-  find: ({ args: { id } }) => state.reminders.find((item) => item.id === id),
+  find: ({ id }) => state.reminders.find((item) => item.id === id),
   reminders: () => state.reminders,
-  create: async ({ args: { text, atDate, repeat } }) => {
+  create: async ({ text, atDate, repeat }) => {
     const id = state.nextId++;
     const timestamp = parseDate(atDate);
 
@@ -19,7 +19,7 @@ export const Root = {
   },
 };
 
-export async function sendNotifications({ args: { id } }) {
+export async function sendNotifications({ id }) {
   // Get the reminder text
   const text = await root.find({ id }).text;
   // Query the reminder repeat and atDate
@@ -37,8 +37,8 @@ export async function sendNotifications({ args: { id } }) {
 }
 
 export const Reminder = {
-  gref: ({ obj }) => root.find({ id: obj.id }),
-  delete: ({ self }) => {
+  gref: (_, { obj }) => root.find({ id: obj.id }),
+  delete: (_, { self }) => {
     const { id } = self.$argsAt(root.find);
     state.reminders = state.reminders.filter((item) => item.id !== id);
   },

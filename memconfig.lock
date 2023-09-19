@@ -1,30 +1,30 @@
 {
   "types": {
-    "email": {
-      "gref_hash": "5d0928717cd7e1bb0a8efb057401a2179e994e26757307d8994ef85d12bc3e53",
-      "type": "email:Root"
-    },
     "sms": {
       "gref_hash": "9f3731cc47302939f352abadad67485a33ed9eb069680d1c83dfcd21f1656c5e",
       "type": "sms:Root"
+    },
+    "email": {
+      "gref_hash": "5d0928717cd7e1bb0a8efb057401a2179e994e26757307d8994ef85d12bc3e53",
+      "type": "email:Root"
     }
   },
   "imports": [
     {
-      "name": "email",
+      "name": "sms",
       "schema": {
         "types": [
           {
             "name": "Root",
-            "description": "Send yourself emails",
+            "description": "Send yourself text messages",
             "actions": [
               {
                 "name": "configure",
-                "description": "Configure your email address to receive messages. This action must be invoked before sending emails.",
+                "description": "Configure your phone number to send and receive text messages.\nPrefix with '+' sign followed by country code.",
                 "type": "Void",
                 "params": [
                   {
-                    "name": "email",
+                    "name": "number",
                     "description": "",
                     "type": "String",
                     "optional": false
@@ -34,23 +34,33 @@
               },
               {
                 "name": "send",
-                "description": "Sends an email to the configured address",
+                "description": "Sends an SMS to the configured phone number",
                 "type": "Void",
                 "params": [
                   {
-                    "name": "subject",
-                    "description": "",
-                    "type": "String",
-                    "optional": false
-                  },
-                  {
-                    "name": "body",
+                    "name": "message",
                     "description": "",
                     "type": "String",
                     "optional": false
                   }
                 ],
                 "hints": {}
+              },
+              {
+                "name": "handleSms",
+                "description": "Tells the user program that an sms was received. You don't normally have to use this.",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "message",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  }
+                ],
+                "hints": {
+                  "hidden": true
+                }
               },
               {
                 "name": "endpoint",
@@ -95,10 +105,48 @@
             ],
             "fields": [
               {
+                "name": "status",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
                 "name": "gref",
                 "description": "A reference to this node",
                 "type": "Ref",
                 "ofType": "Root",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": [
+              {
+                "name": "received",
+                "description": "",
+                "type": "ReceivedEvent",
+                "params": [],
+                "hints": {}
+              }
+            ]
+          },
+          {
+            "name": "ReceivedEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "message",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "ReceivedEvent",
                 "params": [],
                 "hints": {}
               }
@@ -108,7 +156,7 @@
         ],
         "imports": [
           {
-            "name": "sys-email",
+            "name": "sys-sms",
             "schema": {
               "types": [
                 {
@@ -121,7 +169,7 @@
                       "type": "Void",
                       "params": [
                         {
-                          "name": "email",
+                          "name": "number",
                           "description": "",
                           "type": "String",
                           "optional": false
@@ -135,13 +183,7 @@
                       "type": "Void",
                       "params": [
                         {
-                          "name": "subject",
-                          "description": "",
-                          "type": "String",
-                          "optional": false
-                        },
-                        {
-                          "name": "body",
+                          "name": "message",
                           "description": "",
                           "type": "String",
                           "optional": false
@@ -294,20 +336,20 @@
       }
     },
     {
-      "name": "sms",
+      "name": "email",
       "schema": {
         "types": [
           {
             "name": "Root",
-            "description": "Send yourself text messages",
+            "description": "Send yourself emails",
             "actions": [
               {
                 "name": "configure",
-                "description": "Configure your phone number to send and receive text messages.\nPrefix with '+' sign followed by country code.",
+                "description": "Configure your email address to receive messages. This action must be invoked before sending emails.",
                 "type": "Void",
                 "params": [
                   {
-                    "name": "number",
+                    "name": "email",
                     "description": "",
                     "type": "String",
                     "optional": false
@@ -317,33 +359,23 @@
               },
               {
                 "name": "send",
-                "description": "Sends an SMS to the configured phone number",
+                "description": "Sends an email to the configured address",
                 "type": "Void",
                 "params": [
                   {
-                    "name": "message",
+                    "name": "subject",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "body",
                     "description": "",
                     "type": "String",
                     "optional": false
                   }
                 ],
                 "hints": {}
-              },
-              {
-                "name": "handleSms",
-                "description": "Tells the user program that an sms was received. You don't normally have to use this.",
-                "type": "Void",
-                "params": [
-                  {
-                    "name": "message",
-                    "description": "",
-                    "type": "String",
-                    "optional": false
-                  }
-                ],
-                "hints": {
-                  "hidden": true
-                }
               },
               {
                 "name": "endpoint",
@@ -388,31 +420,7 @@
             ],
             "fields": [
               {
-                "name": "gref",
-                "description": "A reference to this node",
-                "type": "Ref",
-                "ofType": "Root",
-                "params": [],
-                "hints": {}
-              }
-            ],
-            "events": [
-              {
-                "name": "received",
-                "description": "",
-                "type": "ReceivedEvent",
-                "params": [],
-                "hints": {}
-              }
-            ]
-          },
-          {
-            "name": "ReceivedEvent",
-            "description": "",
-            "actions": [],
-            "fields": [
-              {
-                "name": "message",
+                "name": "status",
                 "description": "",
                 "type": "String",
                 "params": [],
@@ -422,7 +430,7 @@
                 "name": "gref",
                 "description": "A reference to this node",
                 "type": "Ref",
-                "ofType": "ReceivedEvent",
+                "ofType": "Root",
                 "params": [],
                 "hints": {}
               }
@@ -432,7 +440,7 @@
         ],
         "imports": [
           {
-            "name": "sys-sms",
+            "name": "sys-email",
             "schema": {
               "types": [
                 {
@@ -445,7 +453,7 @@
                       "type": "Void",
                       "params": [
                         {
-                          "name": "number",
+                          "name": "email",
                           "description": "",
                           "type": "String",
                           "optional": false
@@ -459,7 +467,13 @@
                       "type": "Void",
                       "params": [
                         {
-                          "name": "message",
+                          "name": "subject",
+                          "description": "",
+                          "type": "String",
+                          "optional": false
+                        },
+                        {
+                          "name": "body",
                           "description": "",
                           "type": "String",
                           "optional": false
