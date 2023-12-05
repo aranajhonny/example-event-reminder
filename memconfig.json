@@ -3,7 +3,7 @@
     "types": [
       {
         "name": "Root",
-        "description": "Example of a Membrane program to schedule a recurring event reminder.",
+        "description": "Manages the scheduling and notification of events.",
         "actions": [
           {
             "name": "create",
@@ -23,7 +23,8 @@
                 "type": "Boolean",
                 "optional": true
               }
-            ]
+            ],
+            "description": "Creates a new event reminder."
           },
           {
             "name": "sendNotifications",
@@ -33,7 +34,8 @@
                 "name": "id",
                 "type": "Int"
               }
-            ]
+            ],
+            "description": "Sends notifications for a specific event reminder."
           }
         ],
         "fields": [
@@ -46,16 +48,19 @@
                 "type": "Int",
                 "ofType": "Reminder"
               }
-            ]
+            ],
+            "description": "Retrieves a specific reminder by its identifier."
           },
           {
             "name": "reminders",
             "type": "List",
-            "ofType": "Reminder"
+            "ofType": "Reminder",
+            "description": "List of all the scheduled reminders."
           },
           {
             "name": "status",
-            "type": "String"
+            "type": "String",
+            "description": "Current status of the event reminder system."
           }
         ]
       },
@@ -67,27 +72,33 @@
             "hints": {
               "primary": true
             },
-            "type": "String"
+            "type": "String",
+            "description": "The content of the reminder."
           },
           {
             "name": "id",
-            "type": "Int"
+            "type": "Int",
+            "description": "Unique identifier for the reminder."
           },
           {
             "name": "repeat",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Flag to indicate if the reminder should repeat."
           },
           {
             "name": "atDate",
-            "type": "String"
+            "type": "String",
+            "description": "The date and time when the reminder is scheduled."
           }
         ],
         "actions": [
           {
             "name": "delete",
-            "type": "Void"
+            "type": "Void",
+            "description": "Deletes the specified reminder."
           }
-        ]
+        ],
+        "description": "Represents an event reminder with details and configuration."
       }
     ]
   },
