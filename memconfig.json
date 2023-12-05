@@ -3,7 +3,7 @@
     "types": [
       {
         "name": "Root",
-        "description": "Example of a Membrane program to schedule a recurring event reminder.",
+        "description": "Manages event reminders, including creation and notification scheduling.",
         "actions": [
           {
             "name": "create",
@@ -11,19 +11,23 @@
             "params": [
               {
                 "name": "text",
-                "type": "String"
+                "type": "String",
+                "description": "The content or description of the reminder."
               },
               {
                 "name": "atDate",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The scheduled date for the reminder event, if it is to occur only once."
               },
               {
                 "name": "repeat",
                 "type": "Boolean",
-                "optional": true
+                "optional": true,
+                "description": "A flag indicating whether the reminder should repeat periodically."
               }
-            ]
+            ],
+            "description": "Creates a new reminder with specified text and optionally sets a date and repetition."
           },
           {
             "name": "sendNotifications",
@@ -31,9 +35,11 @@
             "params": [
               {
                 "name": "id",
-                "type": "Int"
+                "type": "Int",
+                "description": "The identifier of the reminder for which notifications should be sent."
               }
-            ]
+            ],
+            "description": "Triggers the sending of notifications for the reminder identified by the given ID."
           }
         ],
         "fields": [
@@ -44,18 +50,22 @@
               {
                 "name": "id",
                 "type": "Int",
-                "ofType": "Reminder"
+                "ofType": "Reminder",
+                "description": "The unique identifier of the reminder to be retrieved."
               }
-            ]
+            ],
+            "description": "Retrieves a specific reminder by its unique identifier."
           },
           {
             "name": "reminders",
             "type": "List",
-            "ofType": "Reminder"
+            "ofType": "Reminder",
+            "description": "A list of all scheduled reminders."
           },
           {
             "name": "status",
-            "type": "String"
+            "type": "String",
+            "description": "The current operational status of the reminder service."
           }
         ]
       },
@@ -67,27 +77,33 @@
             "hints": {
               "primary": true
             },
-            "type": "String"
+            "type": "String",
+            "description": "The content or description of the reminder."
           },
           {
             "name": "id",
-            "type": "Int"
+            "type": "Int",
+            "description": "Unique identifier for the reminder."
           },
           {
             "name": "repeat",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether the reminder should be repeated."
           },
           {
             "name": "atDate",
-            "type": "String"
+            "type": "String",
+            "description": "Specifies the date and time when the reminder is scheduled."
           }
         ],
         "actions": [
           {
             "name": "delete",
-            "type": "Void"
+            "type": "Void",
+            "description": "Removes a specified reminder from the system."
           }
-        ]
+        ],
+        "description": "Manages reminders for events with options for repetition and scheduling."
       }
     ]
   },
